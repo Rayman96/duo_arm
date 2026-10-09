@@ -19,6 +19,7 @@
 1. `docs/AlohaMini2_仿真可行性报告.html`：浏览器打开。数字孪生做了什么、验证了什么。
 2. `docs/act_vs_groot_report.md`：两个模型的对比结论。
 3. 图片（在 `docs/images/`）：
+   - `sim_teleop.gif`、`policy_demo.gif`：仿真遥操作和模型自主抓取的动图（也在根目录 README 顶部）。
    - `summary_lift+0.0.png`：仿真 5 路相机画面。
    - `real_grid.png`：真机相机画面，可以和上一张对比。
    - `grasp_grid.png`：双臂抓起方块。

@@ -29,6 +29,8 @@ lessons/08_compare_demo/demo.sh stop            # 关闭窗口和推理服务
 
 ## 现场演示
 
+![ACT 和 GR00T 抓取红色方块](../../docs/images/policy_demo.gif)
+
 仿真窗口右侧面板顶部的「Policy demo」：
 
 - **New position** / **New position + rotation**：随机摆放红色方块（后者再旋转 ±30°）。

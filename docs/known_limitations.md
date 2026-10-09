@@ -27,8 +27,9 @@
 
 | 不足 | 影响 |
 |---|---|
-| 只在这台服务器上验证过（RTX PRO 4500 32 GB、Ubuntu、Isaac Sim 6.1 容器） | 换机器需要重新运行 `tools/setup_env.sh` 和 `tools/run_checks.sh` 验证 |
-| 仿真窗口通过 NICE DCV 远程查看；Isaac Sim 自带的 WebRTC 推流需要放行 49100/TCP、47998/UDP，目前网络不通 | 投屏用 DCV |
+| 只在一台机器上完整验证过（RTX PRO 4500 32 GB、Ubuntu 22.04、Isaac Sim 6.1 容器） | 新机器装好后先跑 `tools/run_checks.sh`；其他显卡上的用时和显存会有差别 |
+| 训练好的模型在私有的 Hugging Face 仓库里 | 需要仓库所有者授权；拿不到就按第 06、07 节自己训练 |
+| 仿真窗口只能显示在运行它的主机屏幕上，没有做远程推流 | 课堂上用投影仪接主机 |
 | GR00T 需要 Hugging Face 账号接受 `nvidia/Cosmos-Reason2-2B` 的许可 | 换账号或换机器要重新登录 |
 | 单机器人仿真约 1.4 倍实时，单进程 | 生成大量数据需要 Isaac Lab 多环境并行（还没做） |
 

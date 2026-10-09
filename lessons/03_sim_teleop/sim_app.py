@@ -12,8 +12,7 @@ Controls (same keys as lerobot_alohamini's keyboard teleop):
 the red cube (needs tools/serve_policy.py servers; lessons/08_compare_demo/demo.sh starts them with the app).
 
 Run (from the repo root):
-  lessons/03_sim_teleop/run_gui.sh          window on this server's desktop (display :0)
-  lessons/03_sim_teleop/run_gui.sh stream   headless + WebRTC livestream for the Isaac Sim WebRTC Streaming Client
+  lessons/03_sim_teleop/run_gui.sh          window on this computer's desktop
 """
 
 import math
@@ -23,9 +22,7 @@ import time
 
 from isaacsim import SimulationApp
 
-STREAM = bool(os.environ.get("SIM_STREAM"))
-# In stream mode Kit renders headless and the WebRTC client receives the whole UI (hide_ui False).
-simulation_app = SimulationApp({"headless": STREAM, "width": 1920, "height": 1080, "window_width": 1920,
+simulation_app = SimulationApp({"headless": False, "width": 1920, "height": 1080, "window_width": 1920,
                                 "window_height": 1080, "hide_ui": False})
 
 import carb.input  # noqa: E402
@@ -37,24 +34,6 @@ from isaacsim.core.experimental.prims import RigidPrim  # noqa: E402
 from isaacsim.core.rendering_manager import ViewportManager  # noqa: E402
 from isaacsim.core.simulation_manager import SimulationManager  # noqa: E402
 from omni.kit.viewport.utility import create_viewport_window  # noqa: E402
-
-if STREAM:
-    import carb.settings  # noqa: E402
-    import omni.kit.app  # noqa: E402
-
-    _settings = carb.settings.get_settings()
-    _settings.set("/app/window/drawMouse", True)
-    _stream = "/exts/omni.kit.livestream.app/primaryStream"
-    _settings.set(f"{_stream}/streamType", "webrtc")
-    _settings.set(f"{_stream}/signalPort", int(os.environ.get("SIM_SIGNAL_PORT", 49100)))
-    _settings.set(f"{_stream}/streamPort", int(os.environ.get("SIM_STREAM_PORT", 47998)))
-    _settings.set(f"{_stream}/allowDynamicResize", True)
-    if os.environ.get("SIM_PUBLIC_IP"):  # address the WebRTC client connects to
-        _settings.set(f"{_stream}/publicIp", os.environ["SIM_PUBLIC_IP"])
-    _mgr = omni.kit.app.get_app().get_extension_manager()
-    for _ext in ("omni.kit.livestream.app", "omni.kit.livestream.webrtc"):
-        if not _mgr.set_extension_enabled_immediate(_ext, True):
-            print(f"[AlohaMini2] livestream extension not available: {_ext}", flush=True)
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "common"))
 from alohamini_ik import GRIPPER_CLOSED, GRIPPER_OPEN, plan_bimanual_pick  # noqa: E402
@@ -437,9 +416,6 @@ def advance_queue(dt):
 # ---- main loop ----------------------------------------------------------------------------------
 print("[AlohaMini2] ready. Keyboard: W/S Z/X A/D U/J T/G; buttons and sliders in 'AlohaMini2 Control'.",
       flush=True)
-if STREAM:
-    print(f"[AlohaMini2] streaming: connect the Isaac Sim WebRTC Streaming Client to "
-          f"{os.environ.get('SIM_PUBLIC_IP', '<server ip>')}", flush=True)
 AUTODEMO = bool(os.environ.get("SIM_AUTODEMO"))
 # Policy auto-play: new cube position -> ACT -> GR00T on the same cube -> next position (rotated every other).
 AUTOPLAY = bool(os.environ.get("SIM_POLICY_AUTOPLAY"))

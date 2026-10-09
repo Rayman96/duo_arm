@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Live demo: ACT and GR00T pick up the red cube in the desktop sim (watch through NICE DCV).
+# Live demo: ACT and GR00T pick up the red cube in the sim window on this computer's screen.
 #   lessons/08_compare_demo/demo.sh          start both policy servers + the sim window ("Policy demo" buttons)
 #   SIM_POLICY_AUTOPLAY=1 lessons/08_compare_demo/demo.sh   auto-play: new cube -> ACT -> GR00T -> ...
 #   lessons/08_compare_demo/demo.sh stop     close the sim window and stop the servers

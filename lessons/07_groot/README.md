@@ -11,7 +11,9 @@
 ## 准备
 
 - `nvidia/GR00T-N1.7-3B`（6.9 GB）会自动下载。
-- 它的输入处理还需要 `nvidia/Cosmos-Reason2-2B` 的文件，这个仓库需要在 Hugging Face 上接受许可并登录：`.venv-lerobot/bin/hf auth login`。这台服务器已经登录。
+- 它的输入处理还需要 `nvidia/Cosmos-Reason2-2B` 的文件，这个仓库需要在 Hugging Face 上接受许可并登录：`.venv-lerobot/bin/hf auth login`。训练和推理都需要。
+- 只想评估、不想训练：`tools/download_models.sh groot` 下载训练好的 15k 步模型（12.5 GB，私有仓库，需要授权）。
+- 微调需要至少 24 GB 显存。
 
 ## 运行
 

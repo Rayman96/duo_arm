@@ -8,7 +8,7 @@
 2. [`docs/outline_coverage.md`](docs/outline_coverage.md)：和大纲 32 课时的逐课对应，哪些能直接上、哪些需要真机、哪些还没做。
 3. [`docs/known_limitations.md`](docs/known_limitations.md)：已知不足，以及怎么在课堂上利用它们。
 
-最快的体验：`SIM_POLICY_AUTOPLAY=1 lessons/08_compare_demo/demo.sh`，在服务器桌面上看两个模型轮流抓方块（`demo.sh stop` 结束）。
+装好环境后最快的体验：`tools/download_models.sh` 下载训练好的模型，再运行 `SIM_POLICY_AUTOPLAY=1 lessons/08_compare_demo/demo.sh`，屏幕上会出现仿真窗口，两个模型轮流抓方块（`demo.sh stop` 结束）。
 
 ## 八节内容
 
@@ -23,25 +23,36 @@
 | 07 | `lessons/07_groot` | 微调 GR00T N1.7，在仿真里闭环评估 | 第 13、27–29 课 | 训练约 75 分钟 |
 | 08 | `lessons/08_compare_demo` | ACT 与 GR00T 大比拼：成功率、泛化、延迟，现场演示 | 第 14、16 课 | 约 30 分钟 |
 
-每节目录里有 `README.md`，写了这节的目标、运行命令、讲解要点和课堂练习。各节按顺序依赖：前一节的输出是后一节的输入。所有生成的东西都在 `outputs/` 里，**现在已经全部跑过一遍**，任何一节都可以直接从中间开始。
+每节目录里有 `README.md`，写了这节的目标、运行命令、讲解要点和课堂练习。各节按顺序依赖：前一节的输出是后一节的输入，所有生成的东西都放在 `outputs/` 里。不想从头训练时，用 `tools/download_models.sh` 下载训练好的模型，第 06–08 节的评估和演示就可以直接运行。
 
-## 准备（一次性）
+## 硬件和系统
 
-- **Isaac Sim 6.1**：只需要 docker 和镜像 `nvcr.io/nvidia/isaac-sim:6.1.0`。所有仿真脚本都通过 `tools/run_isaac.sh <脚本>` 在容器里运行。
-- **训练环境**：`tools/setup_env.sh`。它会创建 `.venv-lerobot/`（Python 3.12、PyTorch + CUDA，LeRobot 来自 `third_party/lerobot_alohamini`），缺少的上游仓库也会克隆下来。
-- **GR00T 额外需要**：在 Hugging Face 上接受 `nvidia/Cosmos-Reason2-2B` 的许可，然后运行 `.venv-lerobot/bin/hf auth login`。
-- **查看界面**：用 NICE DCV 连到服务器桌面（display `:0`）。WebRTC 推流需要放行 49100/TCP 和 47998/UDP，见第 03 节。
+一台带显示器的 Linux 主机，所有操作都在这台主机的桌面上完成。
+
+| | 最低 | 测试用的配置 |
+|---|---|---|
+| 系统 | Ubuntu 22.04 / 24.04，图形桌面 | Ubuntu 22.04 |
+| 显卡 | NVIDIA RTX，24 GB 显存（只做 ACT：16 GB） | RTX PRO 4500 Blackwell 32 GB，驱动 595.80 |
+| 磁盘 | 100 GB 空闲 | |
+| 网络 | 能访问 nvcr.io、Hugging Face、GitHub、PyPI | |
+
+显存占用：仿真窗口约 6 GB，ACT 训练 1.5 GB，GR00T 推理约 13 GB，GR00T 微调约 20 GB（部分微调，见第 07 节）。**GR00T 训练和 GR00T 推理不要同时运行。** 课堂上多组同时使用时，GR00T 微调建议由教师集中排队运行，这和大纲的安排一致。
+
+磁盘占用：Isaac Sim 镜像 32 GB，训练环境 7.5 GB，GR00T 基础模型缓存约 7 GB，训练好的模型 12.5 GB，全部重新跑一遍还会生成约 20 GB 的 `outputs/`。
+
+## 安装（一次性）
 
 所有命令都在仓库根目录下运行。
 
-### 仓库里没有的东西
+1. **docker 和 NVIDIA Container Toolkit**：按 NVIDIA 官方文档安装，确认 `docker run --rm --gpus all ubuntu nvidia-smi` 能看到显卡。
+2. **Isaac Sim 6.1 镜像**：`docker pull nvcr.io/nvidia/isaac-sim:6.1.0`。仿真脚本都通过 `tools/run_isaac.sh <脚本>` 在容器里运行，主机上不用另外安装 Isaac Sim。
+3. **训练环境**：`tools/setup_env.sh`。它会克隆上游仓库到 `third_party/`，创建 `.venv-lerobot/`（Python 3.12、PyTorch + CUDA、LeRobot）。
+4. **Hugging Face 登录**：`.venv-lerobot/bin/hf auth login`。GR00T 需要先在网页上接受 `nvidia/Cosmos-Reason2-2B` 的许可；下载训练好的模型需要账号有访问权限（见下一条）。
+5. **训练好的模型**（可选）：`tools/download_models.sh`（`act` 或 `groot` 只下载一个）。模型在 Hugging Face 的私有仓库 `ray9658/alohamini2-sim-pick-red`，需要仓库所有者授权访问；不下载也可以按第 06、07 节自己训练。
+6. **真机公开数据集**（可选，第 17 课画真机轨迹、和仿真画面对比时用，代码不依赖它）：`.venv-lerobot/bin/hf download yj678/alohamini2_move_test --repo-type dataset --local-dir data/alohamini2_move_test`
+7. **检查**：`tools/run_checks.sh`，约 6 分钟，生成数字孪生并跑完第 01、02、04 节的检查。
 
-git 仓库只包含代码和文档。下面这些太大或可以重新生成，没有放进来：
-
-- `third_party/`：`tools/setup_env.sh` 会自动克隆。
-- `.venv-lerobot/`：`tools/setup_env.sh` 创建。
-- `data/alohamini2_move_test`（真机公开数据集）：`.venv-lerobot/bin/hf download yj678/alohamini2_move_test --repo-type dataset --local-dir data/alohamini2_move_test`
-- `outputs/`（约 20 GB，含训练好的模型）：按第 01–08 节依次运行即可生成；也可以从原服务器 `~/Documents/duo_arm/outputs` 直接拷贝。
+仿真窗口第一次打开要编译着色器，需要几分钟，之后会快很多。
 
 ## 目录
 
@@ -58,23 +69,13 @@ tools/           公共工具
   serve_policy.py  加载训练好的模型，通过 TCP 给仿真提供动作（ACT / GR00T 通用）
   eval_in_sim.py / run_eval.sh   仿真闭环评估
   run_checks.sh    重新生成数字孪生并跑完第 01、02、04 节的检查
+  download_models.sh  从 Hugging Face 下载训练好的 ACT / GR00T
 assets/          修正后的 URDF（第 01 节生成）
-outputs/         所有生成结果：usd/ twin_check/ grasp/ demos/ datasets/ train/ eval/
-data/            真机公开数据集（对比真机画面用）
+outputs/         所有生成结果：usd/ twin_check/ grasp/ demos/ datasets/ train/ eval/（不在 git 里）
+data/            真机公开数据集（对比真机画面用，不在 git 里）
 docs/            教师手册、大纲对应表、已知不足、两份技术报告
-third_party/     AlohaMini、lerobot_alohamini、AM-ARM 上游仓库
+third_party/     AlohaMini、lerobot_alohamini、AM-ARM 上游仓库（setup_env.sh 克隆，不在 git 里）
 ```
-
-## 显卡
-
-服务器是一块 32 GB 的 RTX PRO 4500。占用大致如下：
-
-- 仿真窗口：约 6 GB
-- ACT 训练：1.5 GB
-- GR00T 微调：约 20 GB
-- GR00T 推理：约 13 GB
-
-**GR00T 训练和 GR00T 推理不要同时运行。** 课堂上多组同时使用时，GR00T 微调建议由教师集中排队运行，这和大纲的安排一致。
 
 ## 文档
 

@@ -16,7 +16,7 @@ SIM_POLICY_AUTOPLAY=1 lessons/08_compare_demo/demo.sh   # 自动轮播：新位�
 lessons/08_compare_demo/demo.sh stop            # 关闭窗口和推理服务
 ```
 
-`run_comparison.sh` 会复用已有的评估结果（`FORCE=1` 重新跑），请在 GPU 空闲时运行。
+需要第 06、07 节训练好的模型，或者先用 `tools/download_models.sh` 下载。`run_comparison.sh` 会复用已有的评估结果（`FORCE=1` 重新跑），请在 GPU 空闲时运行。演示窗口显示在主机屏幕上，接投影仪即可。
 
 ## 结果
 

@@ -17,6 +17,8 @@ EVAL_YAW=30 lessons/06_act/eval_act.sh 20      # 方块再随机旋转 ±30°（
 lessons/06_act/eval_act.sh 10 010000           # 评估中间的 10k 步检查点
 ```
 
+只想评估、不想训练：`tools/download_models.sh act` 下载训练好的 10k 和 40k 步模型（0.4 GB，私有仓库，需要授权）。
+
 训练脚本的额外参数会直接传给 `lerobot-train`，例如 `lessons/06_act/train_act.sh 20000 act_chunk50 --policy.chunk_size=50 --policy.n_action_steps=50`。
 
 ## 你会看到

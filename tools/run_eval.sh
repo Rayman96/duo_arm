@@ -14,6 +14,7 @@ SEED="${EVAL_SEED:-1000}"
 YAW="${EVAL_YAW:-0}"
 EVAL="$ROOT/outputs/eval"
 mkdir -p "$EVAL"
+"$ROOT/tools/ensure_usd.sh"
 LOG="$EVAL/${NAME}_serve.log"
 
 "$ROOT/.venv-lerobot/bin/python" -u "$ROOT/tools/serve_policy.py" "$CKPT" --port "$PORT" "$@" > "$LOG" 2>&1 &

@@ -86,7 +86,7 @@
 
 ## 7. 第二轮：交互仿真与双臂抓取（`lessons/03_sim_teleop`、`lessons/04_ik_grasp`）
 
-在本机桌面（DCV `console` 会话）上搭了一个可交互的 Isaac Sim 环境：`lessons/03_sim_teleop/run_gui.sh` 启动，用法见该目录的 `README.md`。键盘控制底盘和升降（按键和真机遥控一致），滑块控制每个关节，另有预设姿态、双臂抓取和放回、演示巡游。
+在本机桌面上搭了一个可交互的 Isaac Sim 环境：`lessons/03_sim_teleop/run_gui.sh` 启动，用法见该目录的 `README.md`。键盘控制底盘和升降（按键和真机遥控一致），滑块控制每个关节，另有预设姿态、双臂抓取和放回、演示巡游。
 
 ![双臂抓取](images/grasp_grid.png)
 

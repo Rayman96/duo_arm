@@ -11,12 +11,12 @@
 ## 运行
 
 ```bash
-lessons/03_sim_teleop/run_gui.sh            # 窗口出现在服务器桌面（display :0），用 NICE DCV 查看
+lessons/03_sim_teleop/run_gui.sh            # 在主机屏幕上打开仿真窗口（要在桌面的终端里运行）
 lessons/03_sim_teleop/run_gui.sh stop       # 关闭
 SIM_AUTODEMO=1 lessons/03_sim_teleop/run_gui.sh   # 启动后自动播放演示（底盘、升降、双臂抓取、挥手）
 ```
 
-约 1 分钟后窗口出现。查看日志：`docker logs -f duo-arm-sim`。
+约 1 分钟后窗口出现，第一次启动要编译着色器会更久。查看日志：`docker logs -f duo-arm-sim`。还没做第 01 节时，脚本会先自动生成数字孪生。
 
 ## 操作
 
@@ -53,22 +53,13 @@ SIM_AUTODEMO=1 lessons/03_sim_teleop/run_gui.sh   # 启动后自动播放演示�
 2. 中间的绿色方块在逆运动学规划范围之外。用键盘移动底盘、调升降，再配合滑块，试着把它抓起来。
 3. 比赛：从同一个起点出发，用键盘把机器人开到桌子另一侧再回来，看谁用时最短、碰撞最少。
 
-## 其他查看方式：WebRTC 推流
-
-```bash
-lessons/03_sim_teleop/run_gui.sh stream
-```
-
-在自己电脑上打开 **Isaac Sim WebRTC Streaming Client**，服务器地址填 `10.86.33.196`，信令端口 49100，流端口 47998。
-
-- 目前从课堂电脑到服务器只放行 SSH，客户端会黑屏；需要网络管理员放行 **49100/TCP 和 47998/UDP**。
-- 推流没有鉴权和加密，只在内网使用。
-
 ## 常见问题
 
-**服务器桌面一直弹「Isaac Sim 无响应」**：这是 GNOME 的检测，窗口 5 秒内没回应就弹窗，点「等待」即可继续使用。已经把这台服务器上 horde 用户的超时改成 60 秒：`gsettings set org.gnome.mutter check-alive-timeout 60000`（恢复默认改成 5000）。
+**一直弹「Isaac Sim 无响应」**：这是 Ubuntu 桌面（GNOME）的检测，窗口 5 秒内没回应就弹窗，点「等待」即可继续使用。可以把超时改成 60 秒：`gsettings set org.gnome.mutter check-alive-timeout 60000`（恢复默认改成 5000）。
+
+**窗口打不开，提示 `no X cookie found` 或 `cannot open display`**：要在主机桌面上的终端里运行，不要通过 SSH 运行。还不行就先运行 `xhost +local:`。
 
 ## 文件
 
 - `sim_app.py`：场景、键盘和滑块控制、预设动作、策略演示面板。
-- `run_gui.sh`：用 docker 启动仿真窗口（桌面或推流）。
+- `run_gui.sh`：用 docker 启动仿真窗口。

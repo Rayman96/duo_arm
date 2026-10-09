@@ -1,0 +1,9 @@
+# Generated or downloaded; see README "仓库里没有的东西"
+outputs/
+third_party/
+data/
+.venv-lerobot/
+.run/
+.claude/
+__pycache__/
+*.pyc

@@ -1,0 +1,774 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="alohamini2_sim">
+
+ <link name="root">
+    <inertial>
+      <mass value="1.0" />
+      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+  </link>
+
+  <link name="root_x_link">
+    <inertial>
+      <mass value="1.0" />
+      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+  </link>
+
+  <link name="root_y_link">
+    <inertial>
+      <mass value="1.0" />
+      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+  </link>
+
+  
+  <joint name="root_x_axis_joint" type="prismatic">
+    <parent link="root" />
+    <child link="root_x_link" />
+    <axis xyz="1 0 0" />
+    <limit effort="500" lower="-20" upper="20" velocity="0.6" />
+    <dynamics damping="100.0" friction="10" />
+  </joint>
+
+  <joint name="root_y_axis_joint" type="prismatic">
+    <parent link="root_x_link" />
+    <child link="root_y_link" />
+    <axis xyz="0 1 0" />
+    <limit effort="500" lower="-20" upper="20" velocity="0.6" />
+    <dynamics damping="100.0" friction="10" />
+  </joint>
+
+  <joint name="root_z_rotation_joint" type="continuous">
+    <parent link="root_y_link" />
+    <child link="base_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="100.0" friction="10" />
+  <limit effort="200" velocity="2" /></joint>
+
+
+
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.000612633316587952 0.0211982181323527 0.18480862701929" rpy="0 0 0" />
+      <mass value="8.86139507603108" />
+      <inertia ixx="0.0397444790644058" ixy="2.09099577497681E-05" ixz="-2.08628911381616E-06" iyy="0.037893946360475" iyz="-0.000833813445075086" izz="0.0455979380299635" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="vertical_link">
+    <inertial>
+      <origin xyz="-0.000482088964298404 -0.0410546516336574 0.425062657231215" rpy="0 0 0" />
+      <mass value="1.2335419276614" />
+      <inertia ixx="0.00155091989851972" ixy="1.5485059025087E-05" ixz="-8.46685606879424E-07" iyy="0.00400826783390671" iyz="2.63497049488797E-05" izz="0.00325969641023924" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/vertical_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/vertical_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="vertical_move" type="prismatic">
+    <origin xyz="0 0 0.096196" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="vertical_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.3" upper="0.3" effort="223.3" velocity="0.1" />
+  </joint>
+  <link name="chest_camera">
+    <inertial>
+      <origin xyz="0.318266847861093 -0.000370150448734445 -0.0826066487973801" rpy="0 0 0" />
+      <mass value="0.05" />
+      <inertia ixx="6.792863e-04" ixy="3.742188e-06" ixz="-1.085713e-05" iyy="2.435364e-03" iyz="9.790601e-07" izz="2.424671e-03" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/chest_camera.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/chest_camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="chest_camera_joint7_dp" type="fixed">
+    <origin xyz="-0.000225761875701821 -0.0690163597583236 0.447985436693376" rpy="1.57079632679491 1.5707963267949 0" />
+    <parent link="vertical_link" />
+    <child link="chest_camera" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="Link2_dp">
+    <inertial>
+      <origin xyz="-0.162572857658571 -0.0120532949042898 -0.146727084322472" rpy="0 0 0" />
+      <mass value="0.45" />
+      <inertia ixx="6.113581e-03" ixy="-1.014595e-04" ixz="2.106771e-05" iyy="2.183847e-02" iyz="3.727664e-05" izz="2.190185e-02" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/Link2_dp.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    </link>
+  <joint name="joint2_dp" type="fixed">
+    <origin xyz="-0.1337 0.076522 0.063355" rpy="3.3411E-05 1.5707 2.618" />
+    <parent link="base_link" />
+    <child link="Link2_dp" />
+    <axis xyz="-8.7287E-05 0 -1" />
+  </joint>
+  <link name="Link3_dp">
+    <inertial>
+      <origin xyz="-0.162560049646843 0.000838249024472069 -0.166596420117959" rpy="0 0 0" />
+      <mass value="0.45" />
+      <inertia ixx="6.113577e-03" ixy="3.367970e-05" ixz="-9.771414e-05" iyy="2.191828e-02" iyz="8.811541e-06" izz="2.182204e-02" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/Link3_dp.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    </link>
+  <joint name="joint3_dp" type="fixed">
+    <origin xyz="-0.0014342 -0.15301 0.063355" rpy="1.5708 1.5708 0" />
+    <parent link="base_link" />
+    <child link="Link3_dp" />
+    <axis xyz="0 0 -1" />
+  </joint>
+  <link name="Link4_dp">
+    <inertial>
+      <origin xyz="-0.01147039688487 -0.162560049646841 -0.145503153867049" rpy="0 0 0" />
+      <mass value="0.45" />
+      <inertia ixx="2.185373e-02" ixy="-6.778308e-05" ixz="4.607933e-05" iyy="6.113577e-03" iyz="7.802454e-05" izz="2.188659e-02" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/Link4_dp.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    </link>
+  <joint name="joint4_dp" type="fixed">
+    <origin xyz="0.13115 0.076408 0.063355" rpy="-1.5708 0 -1.0472" />
+    <parent link="base_link" />
+    <child link="Link4_dp" />
+    <axis xyz="0 0 -1" />
+  </joint>
+  <link name="back_camera">
+    <inertial>
+      <origin xyz="-0.640890595074529 -0.00093675959900047 0.610115206341962" rpy="0 0 0" />
+      <mass value="0.05" />
+      <inertia ixx="1.801363e-03" ixy="-3.006262e-06" ixz="8.363712e-04" iyy="2.435364e-03" iyz="2.434117e-06" izz="1.302594e-03" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/back_camera.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/back_camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="back_camera_joint5_dp" type="fixed">
+    <origin xyz="0.00034085 0.16827 1.0972" rpy="-3.1416 -0.63429 1.5708" />
+    <parent link="base_link" />
+    <child link="back_camera" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="front_camera">
+    <inertial>
+      <origin xyz="0.667531496762255 -0.00090519797224118 0.570675109672329" rpy="0 0 0" />
+      <mass value="0.05" />
+      <inertia ixx="1.562857e-03" ixy="1.953785e-06" ixz="-8.726920e-04" iyy="2.435364e-03" iyz="3.338451e-06" izz="1.541100e-03" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/front_camera.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/front_camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="front_camera_joint6_dp" type="fixed">
+    <origin xyz="0.000309285647814801 -0.0549084504780031 1.10145847792887" rpy="-3.14159265358978 0.78538567812397 1.5707963267949" />
+    <parent link="base_link" />
+    <child link="front_camera" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+
+  
+<link name="left_Base">
+    <inertial>
+      <origin xyz="-2.45960666746703E-07 0.0311418169687909 0.0175746661003382" rpy="0 0 0" />
+      <mass value="0.193184127927598" />
+      <inertia ixx="0.000137030709467877" ixy="2.10136126944992E-08" ixz="4.24087422551286E-09" iyy="0.000169089551209259" iyz="2.26514711036514E-05" izz="0.000145097720857224" />
+    </inertial>
+    <visual name="left_base_link_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Base.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Base.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_base_joint" type="fixed">
+    <origin xyz="0.18726 -0.0599 0.4775" rpy="0 0 0" />
+    <parent link="vertical_link" />
+    <child link="left_Base" />
+  </joint>
+
+  <link name="left_Rotation_Pitch">
+    <inertial>
+      <origin xyz="-0.000892708218042932 -0.0415757409297951 0.0409346003929002" rpy="0 0 0" />
+      <mass value="0.170357879655966" />
+      <inertia ixx="0.000317987257095386" ixy="7.78602088609467E-07" ixz="-5.56524855254493E-06" iyy="0.000241773777957321" iyz="6.57456640185558E-06" izz="0.000128237985282968" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Rotation_Pitch.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Rotation_Pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_shoulder_pan" type="revolute">
+    <origin xyz="0 0 0.039671" rpy="0 0 0" />
+    <parent link="left_Base" />
+    <child link="left_Rotation_Pitch" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="left_Upper_Arm">
+    <inertial>
+      <origin xyz="-0.00498717382802011 0.0711768758039328 2.8269043966363E-05" rpy="0 0 0" />
+      <mass value="0.263860498133606" />
+      <inertia ixx="0.000668147021127385" ixy="4.03237934739254E-06" ixz="-2.09697778252197E-07" iyy="0.000223330767975736" iyz="-1.26104445731441E-06" izz="0.000501587778431765" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Upper_Arm.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Upper_Arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_shoulder_lift" type="revolute">
+    <origin xyz="0 -0.057994 0.10856" rpy="0 1.5708 0" />
+    <parent link="left_Rotation_Pitch" />
+    <child link="left_Upper_Arm" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="left_Lower_Arm">
+    <inertial>
+      <origin xyz="0.00407284254875812 -0.0804991124148977 -0.00296436542896175" rpy="0 0 0" />
+      <mass value="0.270063821451467" />
+      <inertia ixx="0.000836240505620331" ixy="7.56438032673777E-06" ixz="1.34563561753471E-07" iyy="0.000207982015074428" iyz="-3.81627063187763E-06" izz="0.000676983508443096" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Lower_Arm.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Lower_Arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_elbow_flex" type="revolute">
+    <origin xyz="-0.041124 0.12849 0" rpy="0 0 0" />
+    <parent link="left_Upper_Arm" />
+    <child link="left_Lower_Arm" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="left_Wrist_Pitch_Roll">
+    <inertial>
+      <origin xyz="-0.000731389938051136 -0.0147937470601834 -0.00272648444717316" rpy="0 0 0" />
+      <mass value="0.0304496388845638" />
+      <inertia ixx="1.45088548153185E-05" ixy="-2.43324156970094E-07" ixz="1.6469607832887E-08" iyy="1.12953091794003E-05" iyz="5.07349732884368E-07" izz="8.22489621689749E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Wrist_Pitch_Roll.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Wrist_Pitch_Roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_wrist_flex" type="revolute">
+    <origin xyz="0.0031575 -0.19841 0" rpy="0 0 0" />
+    <parent link="left_Lower_Arm" />
+    <child link="left_Wrist_Pitch_Roll" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="left_wrist_yaw">
+    <inertial>
+      <origin xyz="0.000180900832202343 0.0313677255592147 0.00893609906516371" rpy="0 0 0" />
+      <mass value="0.114211005073855" />
+      <inertia ixx="7.49448585845004E-05" ixy="4.88072189676488E-08" ixz="-6.75027390070543E-08" iyy="7.26124576874704E-05" iyz="1.85904539593859E-05" izz="4.70466855792506E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_wrist_yaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_wrist_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_wrist_yaw_joint" type="revolute">
+    <origin xyz="0.0012953 -0.02813 -0.0038124" rpy="3.1416 1.5708 0" />
+    <parent link="left_Wrist_Pitch_Roll" />
+    <child link="left_wrist_yaw" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="left_Fixed_Jaw">
+    <inertial>
+      <origin xyz="-0.0120468759752292 -0.00928566647448964 0.0250465628307969" rpy="0 0 0" />
+      <mass value="0.0743538332299295" />
+      <inertia ixx="5.47545692355685E-05" ixy="5.89750471878331E-07" ixz="9.07583304441209E-06" iyy="5.50442840560141E-05" iyz="-1.59726112695973E-06" izz="2.94444600104965E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Fixed_Jaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Fixed_Jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_wrist_roll" type="revolute">
+    <origin xyz="0 0.060993 -0.022027" rpy="-1.5708 0 0" />
+    <parent link="left_wrist_yaw" />
+    <child link="left_Fixed_Jaw" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="left_Moving_Jaw">
+    <inertial>
+      <origin xyz="-0.0239309041991747 -0.0212490799756402 0.00157431951783818" rpy="0 0 0" />
+      <mass value="0.0281637846719423" />
+      <inertia ixx="1.20100227757542E-05" ixy="-6.97809739108033E-06" ixz="3.71969803258797E-09" iyy="1.30854988702621E-05" iyz="4.78722917701405E-09" izz="1.51699210537755E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Moving_Jaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_Moving_Jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper" type="revolute">
+    <origin xyz="0.020214 0.0020289 0.021614" rpy="-1.5708 0 3.1416" />
+    <parent link="left_Fixed_Jaw" />
+    <child link="left_Moving_Jaw" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="left_camera">
+    <inertial>
+      <origin xyz="-0.00381113120491425 0.169561472261356 -0.115134376786152" rpy="0 0 0" />
+      <mass value="0.03" />
+      <inertia ixx="4.160030e-04" ixy="3.972607e-06" ixz="-4.064228e-06" iyy="2.166408e-04" iyz="1.027352e-04" izz="2.403351e-04" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_camera.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/left_camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_camera_joint8" type="fixed">
+    <origin xyz="0.0018122 -0.07041 -0.0052089" rpy="-0.42318 0 0" />
+    <parent link="left_Fixed_Jaw" />
+    <child link="left_camera" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+<link name="right_Base">
+    <inertial>
+      <origin xyz="-2.45960666746703E-07 0.0311418169687909 0.0175746661003382" rpy="0 0 0" />
+      <mass value="0.193184127927598" />
+      <inertia ixx="0.000137030709467877" ixy="2.10136126944992E-08" ixz="4.24087422551286E-09" iyy="0.000169089551209259" iyz="2.26514711036514E-05" izz="0.000145097720857224" />
+    </inertial>
+    <visual name="right_base_link_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Base.STL" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Base.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_base_joint" type="fixed">
+    <origin xyz="-0.18726 -0.0599 0.4775" rpy="0 0 0" />
+    <parent link="vertical_link" />
+    <child link="right_Base" />
+  </joint>
+
+  <link name="right_Rotation_Pitch">
+    <inertial>
+      <origin xyz="-0.000892708218042932 -0.0415757409297951 0.0409346003929002" rpy="0 0 0" />
+      <mass value="0.170357879655966" />
+      <inertia ixx="0.000317987257095386" ixy="7.78602088609467E-07" ixz="-5.56524855254493E-06" iyy="0.000241773777957321" iyz="6.57456640185558E-06" izz="0.000128237985282968" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Rotation_Pitch.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Rotation_Pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_shoulder_pan" type="revolute">
+    <origin xyz="0 0 0.039671" rpy="0 0 0" />
+    <parent link="right_Base" />
+    <child link="right_Rotation_Pitch" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="right_Upper_Arm">
+    <inertial>
+      <origin xyz="-0.00498717382802011 0.0711768758039328 2.8269043966363E-05" rpy="0 0 0" />
+      <mass value="0.263860498133606" />
+      <inertia ixx="0.000668147021127385" ixy="4.03237934739254E-06" ixz="-2.09697778252197E-07" iyy="0.000223330767975736" iyz="-1.26104445731441E-06" izz="0.000501587778431765" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Upper_Arm.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Upper_Arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_shoulder_lift" type="revolute">
+    <origin xyz="0 -0.057994 0.10856" rpy="0 1.5708 0" />
+    <parent link="right_Rotation_Pitch" />
+    <child link="right_Upper_Arm" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="right_Lower_Arm">
+    <inertial>
+      <origin xyz="0.00407284254875812 -0.0804991124148977 -0.00296436542896175" rpy="0 0 0" />
+      <mass value="0.270063821451467" />
+      <inertia ixx="0.000836240505620331" ixy="7.56438032673777E-06" ixz="1.34563561753471E-07" iyy="0.000207982015074428" iyz="-3.81627063187763E-06" izz="0.000676983508443096" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Lower_Arm.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Lower_Arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_elbow_flex" type="revolute">
+    <origin xyz="-0.041124 0.12849 0" rpy="0 0 0" />
+    <parent link="right_Upper_Arm" />
+    <child link="right_Lower_Arm" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="7.448" velocity="3.7" />
+  </joint>
+  <link name="right_Wrist_Pitch_Roll">
+    <inertial>
+      <origin xyz="-0.000731389938051136 -0.0147937470601834 -0.00272648444717316" rpy="0 0 0" />
+      <mass value="0.0304496388845638" />
+      <inertia ixx="1.45088548153185E-05" ixy="-2.43324156970094E-07" ixz="1.6469607832887E-08" iyy="1.12953091794003E-05" iyz="5.07349732884368E-07" izz="8.22489621689749E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Wrist_Pitch_Roll.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Wrist_Pitch_Roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_wrist_flex" type="revolute">
+    <origin xyz="0.0031575 -0.19841 0" rpy="0 0 0" />
+    <parent link="right_Lower_Arm" />
+    <child link="right_Wrist_Pitch_Roll" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="right_wrist_yaw">
+    <inertial>
+      <origin xyz="0.000180900832202343 0.0313677255592147 0.00893609906516371" rpy="0 0 0" />
+      <mass value="0.114211005073855" />
+      <inertia ixx="7.49448585845004E-05" ixy="4.88072189676488E-08" ixz="-6.75027390070543E-08" iyy="7.26124576874704E-05" iyz="1.85904539593859E-05" izz="4.70466855792506E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_wrist_yaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_wrist_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_wrist_yaw_joint" type="revolute">
+    <origin xyz="0.0012953 -0.02813 -0.0038124" rpy="3.1416 1.5708 0" />
+    <parent link="right_Wrist_Pitch_Roll" />
+    <child link="right_wrist_yaw" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="right_Fixed_Jaw">
+    <inertial>
+      <origin xyz="-0.0120468759752292 -0.00928566647448964 0.0250465628307969" rpy="0 0 0" />
+      <mass value="0.0743538332299295" />
+      <inertia ixx="5.47545692355685E-05" ixy="5.89750471878331E-07" ixz="9.07583304441209E-06" iyy="5.50442840560141E-05" iyz="-1.59726112695973E-06" izz="2.94444600104965E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Fixed_Jaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Fixed_Jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_wrist_roll" type="revolute">
+    <origin xyz="0 0.060993 -0.022027" rpy="-1.5708 0 0" />
+    <parent link="right_wrist_yaw" />
+    <child link="right_Fixed_Jaw" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="right_Moving_Jaw">
+    <inertial>
+      <origin xyz="-0.0239309041991747 -0.0212490799756402 0.00157431951783818" rpy="0 0 0" />
+      <mass value="0.0281637846719423" />
+      <inertia ixx="1.20100227757542E-05" ixy="-6.97809739108033E-06" ixz="3.71969803258797E-09" iyy="1.30854988702621E-05" iyz="4.78722917701405E-09" izz="1.51699210537755E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Moving_Jaw.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_Moving_Jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper" type="revolute">
+    <origin xyz="0.020214 0.0020289 0.021614" rpy="-1.5708 0 3.1416" />
+    <parent link="right_Fixed_Jaw" />
+    <child link="right_Moving_Jaw" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="2.352" velocity="4.7" />
+  </joint>
+  <link name="right_camera">
+    <inertial>
+      <origin xyz="-0.00381113120491425 0.169561472261356 -0.115134376786152" rpy="0 0 0" />
+      <mass value="0.03" />
+      <inertia ixx="4.160030e-04" ixy="3.972607e-06" ixz="-4.064228e-06" iyy="2.166408e-04" iyz="1.027352e-04" izz="2.403351e-04" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_camera.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../../third_party/AlohaMini/AlohaMini2/urdf/alohamini2/alohamini2_meshes/right_camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_camera_joint8" type="fixed">
+    <origin xyz="0.0018122 -0.07041 -0.0052089" rpy="-0.42318 0 0" />
+    <parent link="right_Fixed_Jaw" />
+    <child link="right_camera" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+</robot>
